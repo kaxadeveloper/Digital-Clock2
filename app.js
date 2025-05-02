@@ -3,15 +3,21 @@ const minuteEl = document.getElementById("minutes");
 const secondEl = document.getElementById("seconds");
 const ampmEl = document.getElementById("ampm");
 
-function updateClock(){
-    let h = new Date().getHours()
-    let m = new Date().getMinutes()
-    let s = new Date().getSeconds()
-    let ampm = "AM"
+function updateClock() {
+    let h = new Date().getHours();
+    let m = new Date().getMinutes();
+    let s = new Date().getSeconds();
+    let ampm = "AM";
 
-    if (h > 12){
-        h = h - 12
-        ampm = "PM"
+    if (h >= 12) {
+        ampm = "PM";
+        if (h > 12) {
+            h = h - 12;
+        }
+    }
+
+    if (h === 0) {
+        h = 12; // Midnight edge case
     }
 
     h = h < 10 ? "0" + h : h;
@@ -20,11 +26,12 @@ function updateClock(){
 
     hourEl.innerText = h;
     minuteEl.innerText = m;
-    secondEl.innerText = s; 
-    ampmEl, (innerText = ampm);
-    setTimeout(()=>{
-     updateClock()
-    }, 1000)
+    secondEl.innerText = s;
+    ampmEl.innerText = ampm;
+
+    setTimeout(() => {
+        updateClock();
+    }, 1000);
 }
 
-updateClock()
+updateClock();
